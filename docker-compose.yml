@@ -1,0 +1,26 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/luxmed_db
+      - SPRING_DATASOURCE_USERNAME=luxmed-user
+      - SPRING_DATASOURCE_PASSWORD=mypassword
+
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=luxmed_db
+      - POSTGRES_USER=luxmed-user
+      - POSTGRES_PASSWORD=mypassword
+    ports:
+      - "5555:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
